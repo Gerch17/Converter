@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        TABLE {
+            border-collapse: collapse; /* Убираем двойные линии между ячейками */
+        }
+        TD, TH {
+            padding: 3px; /* Поля вокруг содержимого таблицы */
+            border: 1px solid black; /* Параметры рамки */
+            width: 100px;
+        }
+        TH {
+            background: #b0e0e6; /* Цвет фона */
+        }
+    </style>
+</head>
+<body>
+<form action="/converter">
+    <a href="/converter"><input type="submit" value="Вернуться в конвертер"/></a>
+</form>
+<form action="/logout">
+    <a href="/logout"><input type="submit" value="Выйти из аккаунта"/></a>
+</form>
+<form action="/filter" method="get">
+    <h1 align="center">История</h1>
+    <div class="tableDiv">
+        <input type="date" name="calendar">
+        <select name="outValuteHistory" class="select">
+            <option  value="" text=""></option>
+            <option th:each="valute : ${valutes}" th:value="${valute.getValuteText()}" th:text="${valute.getValuteText()}"></option>
+        </select>
+        <select name="inValuteHistory" class="select">
+            <option  value="" text=""></option>
+            <option th:each="valute : ${valutes}" th:value="${valute.getValuteText()}" th:text="${valute.getValuteText()}"></option>
+        </select>
+        <div class="buttonDiv"><input type="submit" value="Применить фильтр"/></div>
+        <table>
+            <thead >
+            <tr >
+                <td><b> Исходная валюта</b></td>
+                <td><b> Целевая валюта</b> </td>
+                <td><b> Исходная сумма</b> </td>
+                <td><b> Получаемая сумма</b> </td>
+                <td><b> Дата </b> </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="history : ${histories}" >
+
+                <td width="20px" th:text="${history.getOut_valute()}">
+                </td><td th:text="${history.getIn_valute()}">
+            </td><td th:text="${history.getOut_value()}">
+            </td><td th:text="${history.getIn_value()}">
+            </td><td th:text="${history.getDate()}">
+            </td></tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+</body>
+</html>
