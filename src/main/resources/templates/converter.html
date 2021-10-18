@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .parent {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: auto;
+        }
+        .block {
+            width: 700px;
+            height: 1000px;
+            position: absolute;
+            top: 0;
+            right: 100px;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+
+        }
+        .someDiv {
+            margin-left: 162px;
+        }
+        .buttonDiv {
+            margin-left: 40%;
+        }
+        .tableDiv {
+            margin-left: 10%;
+        }
+
+    </style>
+</head>
+<body>
+<div class="parent">
+    <div class="block">
+    <form action="/submitConvert" method="get">
+    <h1 align="center">Конвертер</h1>
+    <span style="color: red" th:text="${incorrect}"></span>
+    </br>
+    <select name="outValute" class="select">
+        <option  th:value="${selectedOutValute}" th:text="${selectedOutValute}"></option>
+        <option th:each="valute : ${valutes}" th:value="${valute.getValute_name()}" th:text="${valute.getValuteText()}"></option>
+    </select>
+    <select name="inValute" class="select">
+        <option  th:value="${selectedInValute}" th:text="${selectedInValute}"></option>
+        <option th:each="valute : ${valutes}" th:value="${valute.getValute_name()}" th:text="${valute.getValuteText()}"></option>
+    </select>
+    <br>
+        <div class="someDiv">
+            <input name="inputData" th:value="${inputData}" onkeypress='validate(event)' placeholder="Исходная валюта">
+            <input name="outputData" th:value="${outputData}" placeholder="Целевая валюта">
+        </div>
+    <br>
+
+    <div class="buttonDiv"><input type="submit" value="Конвертировать"/></div>
+
+<br>
+
+    </form>
+           <a href="/history"><input type="submit" value="Посмотреть историю" method="post"/></a>
+            <a href="/logout"><input type="submit" value="Выйти из аккаунта"/></a>
+    </div>
+    <div>
+    </div>
+</div>
+<br>
+
+</body>
+<script>
+function validate(evt) {
+var theEvent = evt || window.event;
+var key = theEvent.keyCode || theEvent.which;
+key = String.fromCharCode( key );
+var regex = /[0-9]|\./;
+if( !regex.test(key) ) {
+theEvent.returnValue = false;
+if(theEvent.preventDefault) theEvent.preventDefault();
+}
+}
+</script>
+</html>
